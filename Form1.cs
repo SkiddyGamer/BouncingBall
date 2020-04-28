@@ -44,15 +44,16 @@ namespace BouncingBall
         {
             Ball.Top += verVelocity;
             Ball.Left += horVelocity;
-            Ball.BackColor = Color.Transparent;
         }
 
         private void InitializeField()
         {
             verVelocity = speed;
             horVelocity = speed;
+            this.DoubleBuffered = true;
             this.BackColor = Color.SkyBlue;
             this.KeyDown += new KeyEventHandler(Field_KeyDown);
+            Ball.BackColor = Color.Transparent;
 
             //human.Newemail += new EmailEventHandler(HumanHandlesEmail);
         }
@@ -82,6 +83,7 @@ namespace BouncingBall
             if(e.KeyCode == Keys.X)
             {
                 speed += 1; //speed++
+                UpdateVelocities();
                 UpdateSpeedLabel();
             }
             else if(e.KeyCode == Keys.Z)
@@ -89,6 +91,7 @@ namespace BouncingBall
                 if(speed > 1)
                 {
                     speed -= 1; //speed--
+                    UpdateVelocities();
                     UpdateSpeedLabel();
                 }
             }
@@ -97,6 +100,15 @@ namespace BouncingBall
         private void UpdateSpeedLabel()
         {
             SpeedLabel.Text = "DVD speed: " + speed;
+        }
+
+        private void UpdateVelocities()
+        {
+            verVelocity = speed * (verVelocity / Math.Abs(verVelocity));
+            horVelocity = speed * (horVelocity / Math.Abs(horVelocity));
+
+
+
         }
     }
 }
